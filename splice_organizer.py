@@ -224,7 +224,7 @@ class SampleOrganizer:
 
         # 1. All/ folder
         all_link = ORGANIZED_DIR / "All" / unique_name
-        self._create_symlink(source_path, all_link)
+        self._create_link(source_path, all_link)
         symlinks_created.append(str(all_link))
 
         # 2. Categorized folder (One_Shots or Loops)
@@ -233,19 +233,19 @@ class SampleOrganizer:
         else:
             cat_link = ORGANIZED_DIR / "One_Shots" / category / unique_name
 
-        self._create_symlink(source_path, cat_link)
+        self._create_link(source_path, cat_link)
         symlinks_created.append(str(cat_link))
 
         # 3. Genre folders (can be multiple)
         if genres:
             for parent, genre in genres:
                 genre_link = ORGANIZED_DIR / "Genres" / parent / genre / unique_name
-                self._create_symlink(source_path, genre_link)
+                self._create_link(source_path, genre_link)
                 symlinks_created.append(str(genre_link))
         else:
             # No genre detected, put in Other
             genre_link = ORGANIZED_DIR / "Genres" / "Other" / unique_name
-            self._create_symlink(source_path, genre_link)
+            self._create_link(source_path, genre_link)
             symlinks_created.append(str(genre_link))
 
         # Update state
@@ -276,11 +276,12 @@ class SampleOrganizer:
         del self.state["files"][source_str]
         self._save_state()
 
-    def _create_symlink(self, source: Path, link: Path):
-        """Create symlink, handling existing files."""
+    def _create_link(self, source: Path, link: Path):
+        """Create hard link, handling existing files."""
+        import os
         if link.exists() or link.is_symlink():
             link.unlink()
-        link.symlink_to(source)
+        os.link(source, link)
 
     def _is_loop(self, path: str) -> bool:
         """Determine if sample is a loop based on folder path and filename."""
@@ -430,14 +431,14 @@ class SampleOrganizer:
 
     def resync(self):
         """Force reprocess all files by clearing state."""
-        logger.info("Clearing state and removing all symlinks...")
+        logger.info("Clearing state and removing all links...")
 
-        # Remove all existing symlinks
+        # Remove all existing links (symlinks and hard links)
         for folder in ['All', 'One_Shots', 'Loops', 'Genres']:
             folder_path = ORGANIZED_DIR / folder
             if folder_path.exists():
                 for item in folder_path.rglob('*'):
-                    if item.is_symlink():
+                    if item.is_file() or item.is_symlink():
                         item.unlink()
 
         # Clear state
