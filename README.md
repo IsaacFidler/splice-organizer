@@ -41,7 +41,7 @@ Your original Splice folder stays untouched - the script only creates symlinks.
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/splice-organizer.git ~/.splice-organizer
+git clone https://github.com/IsaacFidler/splice-organizer.git ~/.splice-organizer
 
 # Create virtual environment
 cd ~/.splice-organizer
