@@ -73,6 +73,71 @@ LOOP_CATEGORIES = {
                r'(?:^|[\s_/])voice', r'(?:^|[\s_/])hook', r'(?:^|[\s_/])chant'],
 }
 
+# Genre categories - keywords map to genre buckets
+# Samples can match multiple genres and will be symlinked to each
+GENRE_CATEGORIES = {
+    'Electronic': {
+        'Techno': [r'techno', r'industrial', r'minimal', r'ebm', r'hard[_\s-]?techno',
+                   r'acid[_\s-]?techno', r'berlin', r'warehouse'],
+        'House': [r'house', r'deep[_\s-]?house', r'tech[_\s-]?house', r'future[_\s-]?house',
+                  r'bass[_\s-]?house', r'jackin', r'chicago[_\s-]?house', r'garage[_\s-]?house',
+                  r'progressive[_\s-]?house', r'tropical'],
+        'Drum_and_Bass': [r'drum[_\s-]?(and|&|n)[_\s-]?bass', r'dnb', r'd&b', r'd[_\s-]?n[_\s-]?b',
+                          r'jungle', r'liquid', r'neuro', r'jump[_\s-]?up', r'breakcore'],
+        'Dubstep': [r'dubstep', r'riddim', r'brostep', r'tearout', r'deep[_\s-]?dubstep',
+                    r'melodic[_\s-]?dubstep', r'colour[_\s-]?bass', r'color[_\s-]?bass'],
+        'Garage': [r'uk[_\s-]?garage', r'ukg', r'2[_\s-]?step', r'speed[_\s-]?garage',
+                   r'bassline', r'4x4'],
+        'Footwork': [r'footwork', r'juke', r'chicago[_\s-]?footwork', r'160[_\s-]?bpm'],
+        'Trap': [r'trap', r'hip[_\s-]?hop', r'crunk', r'dirty[_\s-]?south', r'atlanta',
+                 r'phonk', r'memphis', r'boom[_\s-]?bap', r'rap', r'beats'],
+        'Drill': [r'drill', r'uk[_\s-]?drill', r'ny[_\s-]?drill', r'chicago[_\s-]?drill',
+                  r'brooklyn[_\s-]?drill'],
+        'Grime': [r'grime', r'uk[_\s-]?bass', r'8[_\s-]?bar', r'140[_\s-]?bpm'],
+        'Trance': [r'trance', r'psytrance', r'psy[_\s-]?trance', r'progressive[_\s-]?trance',
+                   r'uplifting', r'goa', r'hardstyle', r'hard[_\s-]?dance'],
+        'Ambient': [r'ambient', r'experimental', r'downtempo', r'chill[_\s-]?out', r'idm',
+                    r'electronica', r'soundscape', r'drone', r'atmospheric'],
+        'Disco': [r'disco', r'nu[_\s-]?disco', r'funk', r'boogie', r'italo', r'cosmic'],
+        'Synthwave': [r'synthwave', r'retrowave', r'outrun', r'vaporwave', r'80s',
+                      r'synth[_\s-]?pop', r'electro[_\s-]?pop'],
+        'Lo-Fi': [r'lo[_\s-]?fi', r'lofi', r'chill[_\s-]?hop', r'chillhop', r'jazzy',
+                  r'dusty', r'tape', r'vinyl', r'bedroom'],
+        'Pop': [r'pop', r'edm', r'mainstream', r'radio', r'commercial', r'dance[_\s-]?pop',
+                r'future[_\s-]?pop', r'electro[_\s-]?pop'],
+        'Drum_Machines': [r'808', r'909', r'707', r'727', r'606', r'303', r'cr[_\s-]?78',
+                          r'tr[_\s-]?808', r'tr[_\s-]?909', r'linndrum', r'linn[_\s-]?drum',
+                          r'dmx', r'oberheim', r'sp[_\s-]?1200', r'sp[_\s-]?12', r'mpc',
+                          r'drum[_\s-]?machine', r'vintage[_\s-]?drum', r'analog[_\s-]?drum'],
+    },
+    'Live': {
+        'Rock': [r'rock', r'indie', r'alternative', r'metal', r'grunge', r'hard[_\s-]?rock',
+                 r'prog[_\s-]?rock', r'classic[_\s-]?rock', r'guitar[_\s-]?driven'],
+        'Punk': [r'punk', r'post[_\s-]?punk', r'new[_\s-]?wave', r'no[_\s-]?wave',
+                 r'hardcore', r'pop[_\s-]?punk', r'emo', r'screamo'],
+        'Darkwave': [r'darkwave', r'dark[_\s-]?wave', r'coldwave', r'cold[_\s-]?wave',
+                     r'goth', r'gothic', r'deathrock', r'ethereal', r'witch[_\s-]?house'],
+        'Jazz': [r'jazz', r'fusion', r'bebop', r'swing', r'big[_\s-]?band', r'smooth[_\s-]?jazz',
+                 r'acid[_\s-]?jazz', r'nu[_\s-]?jazz', r'broken[_\s-]?beat'],
+        'Soul': [r'soul', r'r&b', r'rnb', r'r[_\s-]?and[_\s-]?b', r'motown', r'neo[_\s-]?soul',
+                 r'gospel', r'rhythm[_\s-]?and[_\s-]?blues'],
+        'Dub': [r'dub', r'reggae', r'roots', r'dancehall', r'ska', r'rocksteady',
+                r'steppas', r'digital[_\s-]?dub'],
+        'Blues': [r'blues', r'delta', r'chicago[_\s-]?blues', r'electric[_\s-]?blues',
+                  r'slide[_\s-]?guitar', r'12[_\s-]?bar'],
+        'Folk': [r'folk', r'country', r'americana', r'acoustic', r'singer[_\s-]?songwriter',
+                 r'bluegrass', r'celtic', r'irish', r'appalachian'],
+        'Classical': [r'classical', r'orchestral', r'cinematic', r'film[_\s-]?score',
+                      r'strings', r'brass', r'woodwind', r'symphony', r'chamber',
+                      r'epic', r'trailer', r'score'],
+        'World': [r'world', r'ethnic', r'latin', r'african', r'afro', r'middle[_\s-]?eastern',
+                  r'arabic', r'indian', r'asian', r'brazilian', r'cuban', r'flamenco',
+                  r'tribal', r'percussion'],
+        'Acoustic': [r'acoustic', r'live[_\s-]?drum', r'real[_\s-]?drum', r'studio[_\s-]?drum',
+                     r'recorded', r'live[_\s-]?kit', r'natural', r'organic'],
+    },
+}
+
 logger = logging.getLogger(__name__)
 
 
@@ -92,6 +157,12 @@ class SampleOrganizer:
             *[ORGANIZED_DIR / "One_Shots" / cat for cat in list(ONESHOT_CATEGORIES.keys()) + ["Other"]],
             # Loops
             *[ORGANIZED_DIR / "Loops" / cat for cat in list(LOOP_CATEGORIES.keys()) + ["Other"]],
+            # Genres - Electronic
+            *[ORGANIZED_DIR / "Genres" / "Electronic" / genre for genre in GENRE_CATEGORIES['Electronic'].keys()],
+            # Genres - Live
+            *[ORGANIZED_DIR / "Genres" / "Live" / genre for genre in GENRE_CATEGORIES['Live'].keys()],
+            # Genres - Other (for samples that don't match any genre)
+            ORGANIZED_DIR / "Genres" / "Other",
         ]
         for d in dirs:
             d.mkdir(parents=True, exist_ok=True)
@@ -130,6 +201,9 @@ class SampleOrganizer:
         # Get category
         category = self._categorize(source_str, is_loop)
 
+        # Detect genres (can be multiple)
+        genres = self._detect_genres(source_str)
+
         # Generate unique filename
         unique_name = self._generate_unique_name(source_path)
 
@@ -138,6 +212,11 @@ class SampleOrganizer:
             logger.info(f"[DRY RUN] Would create:")
             logger.info(f"  All/{unique_name}")
             logger.info(f"  {type_folder}/{category}/{unique_name}")
+            if genres:
+                for parent, genre in genres:
+                    logger.info(f"  Genres/{parent}/{genre}/{unique_name}")
+            else:
+                logger.info(f"  Genres/Other/{unique_name}")
             return True
 
         # Create symlinks
@@ -148,7 +227,7 @@ class SampleOrganizer:
         self._create_symlink(source_path, all_link)
         symlinks_created.append(str(all_link))
 
-        # 2. Categorized folder
+        # 2. Categorized folder (One_Shots or Loops)
         if is_loop:
             cat_link = ORGANIZED_DIR / "Loops" / category / unique_name
         else:
@@ -157,11 +236,24 @@ class SampleOrganizer:
         self._create_symlink(source_path, cat_link)
         symlinks_created.append(str(cat_link))
 
+        # 3. Genre folders (can be multiple)
+        if genres:
+            for parent, genre in genres:
+                genre_link = ORGANIZED_DIR / "Genres" / parent / genre / unique_name
+                self._create_symlink(source_path, genre_link)
+                symlinks_created.append(str(genre_link))
+        else:
+            # No genre detected, put in Other
+            genre_link = ORGANIZED_DIR / "Genres" / "Other" / unique_name
+            self._create_symlink(source_path, genre_link)
+            symlinks_created.append(str(genre_link))
+
         # Update state
         self.state["files"][source_str] = symlinks_created
         self._save_state()
 
-        logger.info(f"Processed: {source_path.name} -> {category} ({'Loop' if is_loop else 'One-Shot'})")
+        genre_str = ', '.join([g[1] for g in genres]) if genres else 'Other'
+        logger.info(f"Processed: {source_path.name} -> {category} ({'Loop' if is_loop else 'One-Shot'}) [{genre_str}]")
         return True
 
     def remove_file(self, source_path: Path):
@@ -246,6 +338,47 @@ class SampleOrganizer:
 
         return 'Other'
 
+    def _detect_genres(self, path: str) -> list:
+        """Detect genres from pack name and path. Returns list of (parent, genre) tuples."""
+        path_obj = Path(path)
+        matched_genres = []
+
+        # Build search text primarily from pack name and folder structure
+        parts_to_search = []
+
+        # Get pack name (most important for genre detection)
+        try:
+            parts = path_obj.parts
+            idx = parts.index('packs')
+            pack_name = parts[idx + 1]
+            parts_to_search.append(pack_name)
+            # Also include immediate subfolders of the pack
+            if idx + 2 < len(parts):
+                parts_to_search.append(parts[idx + 2])
+        except (ValueError, IndexError):
+            pass
+
+        # Add some parent folders
+        for parent in path_obj.parents:
+            if parent.name and parent.name.lower() not in {'sounds', 'packs', 'splice', 'samples', 'audio', 'users', 'isaacfidler'}:
+                parts_to_search.append(parent.name)
+            if len(parts_to_search) >= 6:
+                break
+
+        search_text = ' '.join(parts_to_search).lower()
+
+        # Check each genre category
+        for parent_category, genres in GENRE_CATEGORIES.items():
+            for genre, patterns in genres.items():
+                for pattern in patterns:
+                    if re.search(pattern, search_text, re.IGNORECASE):
+                        genre_tuple = (parent_category, genre)
+                        if genre_tuple not in matched_genres:
+                            matched_genres.append(genre_tuple)
+                        break  # Found a match for this genre, move to next genre
+
+        return matched_genres
+
     def _generate_unique_name(self, source: Path) -> str:
         """Generate unique filename with pack prefix to avoid collisions."""
         parts = source.parts
@@ -300,7 +433,7 @@ class SampleOrganizer:
         logger.info("Clearing state and removing all symlinks...")
 
         # Remove all existing symlinks
-        for folder in ['All', 'One_Shots', 'Loops']:
+        for folder in ['All', 'One_Shots', 'Loops', 'Genres']:
             folder_path = ORGANIZED_DIR / folder
             if folder_path.exists():
                 for item in folder_path.rglob('*'):
@@ -319,6 +452,9 @@ class SampleOrganizer:
         stats = {
             'One_Shots': {},
             'Loops': {},
+            'Genres_Electronic': {},
+            'Genres_Live': {},
+            'Genres_Other': 0,
             'Total': 0
         }
 
@@ -330,12 +466,28 @@ class SampleOrganizer:
 
                 try:
                     org_idx = parts.index('Splice-Organized')
-                    if org_idx + 2 < len(parts):
-                        type_folder = parts[org_idx + 1]  # One_Shots or Loops
-                        category = parts[org_idx + 2]     # Kicks, Snares, etc.
+                    if org_idx + 1 < len(parts):
+                        type_folder = parts[org_idx + 1]  # One_Shots, Loops, Genres, or All
 
-                        if type_folder in stats and type_folder != 'All':
-                            stats[type_folder][category] = stats[type_folder].get(category, 0) + 1
+                        if type_folder == 'One_Shots' and org_idx + 2 < len(parts):
+                            category = parts[org_idx + 2]
+                            stats['One_Shots'][category] = stats['One_Shots'].get(category, 0) + 1
+
+                        elif type_folder == 'Loops' and org_idx + 2 < len(parts):
+                            category = parts[org_idx + 2]
+                            stats['Loops'][category] = stats['Loops'].get(category, 0) + 1
+
+                        elif type_folder == 'Genres' and org_idx + 2 < len(parts):
+                            parent = parts[org_idx + 2]  # Electronic, Live, or Other
+                            if parent == 'Electronic' and org_idx + 3 < len(parts):
+                                genre = parts[org_idx + 3]
+                                stats['Genres_Electronic'][genre] = stats['Genres_Electronic'].get(genre, 0) + 1
+                            elif parent == 'Live' and org_idx + 3 < len(parts):
+                                genre = parts[org_idx + 3]
+                                stats['Genres_Live'][genre] = stats['Genres_Live'].get(genre, 0) + 1
+                            elif parent == 'Other':
+                                stats['Genres_Other'] += 1
+
                 except ValueError:
                     continue
 
@@ -349,6 +501,16 @@ class SampleOrganizer:
         print("\nLoops:")
         for cat, count in sorted(stats['Loops'].items()):
             print(f"  {cat}: {count}")
+
+        print("\nGenres - Electronic:")
+        for genre, count in sorted(stats['Genres_Electronic'].items()):
+            print(f"  {genre}: {count}")
+
+        print("\nGenres - Live:")
+        for genre, count in sorted(stats['Genres_Live'].items()):
+            print(f"  {genre}: {count}")
+
+        print(f"\nGenres - Other (untagged): {stats['Genres_Other']}")
         print()
 
     def validate(self):
