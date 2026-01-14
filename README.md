@@ -24,15 +24,38 @@ This script watches your Splice folder and creates symlinks in an organized stru
 │   ├── Bass/
 │   ├── Vocals/
 │   └── Other/
-└── Loops/                  # Categorized loops
-    ├── Drums/
-    ├── Bass/
-    ├── Synths/
-    ├── Pads/
-    ├── FX/
-    ├── Percussion/
-    ├── Vocals/
-    └── Other/
+├── Loops/                  # Categorized loops
+│   ├── Drums/
+│   ├── Bass/
+│   ├── Synths/
+│   ├── Pads/
+│   ├── FX/
+│   ├── Percussion/
+│   ├── Vocals/
+│   └── Other/
+└── Genres/                 # Organized by genre
+    ├── Electronic/
+    │   ├── Techno/
+    │   ├── House/
+    │   ├── Drum_and_Bass/
+    │   ├── Dubstep/
+    │   ├── Garage/
+    │   ├── Trap/
+    │   ├── Drill/
+    │   ├── Ambient/
+    │   ├── Lo-Fi/
+    │   ├── Drum_Machines/  # 808, 909, etc.
+    │   └── ...
+    ├── Live/
+    │   ├── Rock/
+    │   ├── Punk/
+    │   ├── Darkwave/
+    │   ├── Jazz/
+    │   ├── Dub/
+    │   ├── Classical/
+    │   ├── Acoustic/
+    │   └── ...
+    └── Other/              # Samples with no genre match
 ```
 
 Your original Splice folder stays untouched - the script only creates symlinks.
@@ -123,7 +146,10 @@ ORGANIZED_DIR = Path.home() / "Splice-Organized"
 
 1. **One-Shot vs Loop**: Detected from folder path (`/One_Shots/` vs `/Loops/`) and filename patterns
 2. **Instrument Category**: Parsed from filename and parent folder names (e.g., `drums_kick_punch` → Kicks)
-3. **Collision Handling**: Files are prefixed with pack name (e.g., `808_Essentials__kick_01.wav`)
+3. **Genre Detection**: Parsed from pack name and folder structure using keyword matching
+   - Samples can match multiple genres and will appear in each folder
+   - E.g., "UK Dubstep Drums" → appears in both `Electronic/Dubstep/` and `Live/Dub/`
+4. **Collision Handling**: Files are prefixed with pack name (e.g., `808_Essentials__kick_01.wav`)
 
 ## Requirements
 
