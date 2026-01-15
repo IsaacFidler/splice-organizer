@@ -151,18 +151,27 @@ class SampleOrganizer:
 
     def _ensure_directories(self):
         """Create all required directories."""
+        # Instrument categories for genre subfolders
+        oneshot_cats = list(ONESHOT_CATEGORIES.keys()) + ["Other"]
+        loop_cats = [f"{cat}_Loops" for cat in list(LOOP_CATEGORIES.keys()) + ["Other"]]
+        genre_instrument_cats = oneshot_cats + loop_cats
+
         dirs = [
             ORGANIZED_DIR / "All",
             # One-shots
-            *[ORGANIZED_DIR / "One_Shots" / cat for cat in list(ONESHOT_CATEGORIES.keys()) + ["Other"]],
+            *[ORGANIZED_DIR / "One_Shots" / cat for cat in oneshot_cats],
             # Loops
             *[ORGANIZED_DIR / "Loops" / cat for cat in list(LOOP_CATEGORIES.keys()) + ["Other"]],
-            # Genres - Electronic
-            *[ORGANIZED_DIR / "Genres" / "Electronic" / genre for genre in GENRE_CATEGORIES['Electronic'].keys()],
-            # Genres - Live
-            *[ORGANIZED_DIR / "Genres" / "Live" / genre for genre in GENRE_CATEGORIES['Live'].keys()],
-            # Genres - Other (for samples that don't match any genre)
-            ORGANIZED_DIR / "Genres" / "Other",
+            # Genres - Electronic (with instrument subfolders)
+            *[ORGANIZED_DIR / "Genres" / "Electronic" / genre / inst
+              for genre in GENRE_CATEGORIES['Electronic'].keys()
+              for inst in genre_instrument_cats],
+            # Genres - Live (with instrument subfolders)
+            *[ORGANIZED_DIR / "Genres" / "Live" / genre / inst
+              for genre in GENRE_CATEGORIES['Live'].keys()
+              for inst in genre_instrument_cats],
+            # Genres - Other (with instrument subfolders)
+            *[ORGANIZED_DIR / "Genres" / "Other" / inst for inst in genre_instrument_cats],
         ]
         for d in dirs:
             d.mkdir(parents=True, exist_ok=True)
@@ -236,15 +245,21 @@ class SampleOrganizer:
         self._create_link(source_path, cat_link)
         symlinks_created.append(str(cat_link))
 
-        # 3. Genre folders (can be multiple)
+        # 3. Genre folders (can be multiple) - now with instrument subfolders
+        # Determine instrument subfolder name
+        if is_loop:
+            instrument_folder = f"{category}_Loops"
+        else:
+            instrument_folder = category
+
         if genres:
             for parent, genre in genres:
-                genre_link = ORGANIZED_DIR / "Genres" / parent / genre / unique_name
+                genre_link = ORGANIZED_DIR / "Genres" / parent / genre / instrument_folder / unique_name
                 self._create_link(source_path, genre_link)
                 symlinks_created.append(str(genre_link))
         else:
             # No genre detected, put in Other
-            genre_link = ORGANIZED_DIR / "Genres" / "Other" / unique_name
+            genre_link = ORGANIZED_DIR / "Genres" / "Other" / instrument_folder / unique_name
             self._create_link(source_path, genre_link)
             symlinks_created.append(str(genre_link))
 
